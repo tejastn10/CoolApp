@@ -1,0 +1,30 @@
+{
+  "name": "cool-app",
+  "version": "1.0.0",
+  "description": "Awesome app for people to interact",
+  "main": "app.js",
+  "author": "tejastn10 <tejastn10@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "watch-ts": "tsc -w",
+    "server": "nodemon dist/app.js",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"Typescript, Node\" -c \"yellow.bold, cyan.bold\" \"yarn run watch-ts\" \"yarn run server\" "
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.7",
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.23"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
+  }
+}
