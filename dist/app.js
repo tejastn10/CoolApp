@@ -24,11 +24,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 const cors_1 = __importDefault(require("cors"));
-require("dotenv").config();
+const db_1 = require("./config/db");
 const app = express_1.default();
+// * Connect DataBase
+db_1.connectDB();
 app.get("/", (req, res) => res.send("API Running..."));
 const PORT = process.env.PORT || 5000;
 app.use(cors_1.default());
 app.use(express_1.json());
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-//# sourceMappingURL=app.js.map

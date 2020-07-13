@@ -1,9 +1,12 @@
 import express, { json } from "express";
 import cors from "cors";
 
-require("dotenv").config();
+import { connectDB } from "./config/db";
 
 const app = express();
+
+// * Connect DataBase
+connectDB();
 
 app.get("/", (req, res) => res.send("API Running..."));
 
