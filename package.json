@@ -8,7 +8,7 @@
   "scripts": {
     "watch-ts": "tsc -w",
     "server": "nodemon dist/app.js",
-    "dev": "concurrently -k -p \"[{name}]\" -n \"Typescript, Node\" -c \"blue.bold, yellow.bold\" \"yarn run watch-ts\" \"yarn run server\" "
+    "dev": "concurrently -k -p \"[{name}]\" -n \"Typescript,Node\" -c \"blue.bold,yellow.bold\" \"yarn run watch-ts\" \"yarn run server\" "
   },
   "dependencies": {
     "@types/cors": "^2.8.6",
