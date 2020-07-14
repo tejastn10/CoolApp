@@ -8,10 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDB = void 0;
 const mongoose_1 = require("mongoose");
-require("dotenv").config({ path: "src/config/.env" });
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config({ path: "src/config/.env" });
 const URI = process.env["URI"]; // ?Type fixed with exclamation mark
 exports.connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {

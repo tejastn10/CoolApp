@@ -1,6 +1,7 @@
 import { connect } from "mongoose";
+import dotenv from "dotenv";
 
-require("dotenv").config({ path: "src/config/.env" });
+dotenv.config({ path: "src/config/.env" });
 
 const URI: string = process.env["URI"]!; // ?Type fixed with exclamation mark
 
