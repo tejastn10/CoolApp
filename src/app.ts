@@ -1,14 +1,14 @@
-import express, { json } from "express";
+import express, { json, Application, Request, Response } from "express";
 import cors from "cors";
 
 import { connectDB } from "./config/db";
 
-const app = express();
+const app: Application = express();
 
 // * Connect DataBase
 connectDB();
 
-app.get("/", (req, res) => res.send("API Running..."));
+app.get("/", (req: Request, res: Response) => res.send("API Running..."));
 
 const PORT = process.env.PORT || 5000;
 
