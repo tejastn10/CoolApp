@@ -10,7 +10,13 @@ connectDB();
 
 app.get("/", (req: Request, res: Response) => res.send("API Running..."));
 
-const PORT = process.env.PORT || 5000;
+// Routes
+app.use("/api/users", require("./routes/api/users"));
+app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/profile", require("./routes/api/profile"));
+app.use("/api/posts", require("./routes/api/posts"));
+
+const PORT: string | number = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(json());
