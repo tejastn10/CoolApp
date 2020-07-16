@@ -8,7 +8,9 @@ const app: Application = express();
 // * Connect DataBase
 connectDB();
 
-app.get("/", (req: Request, res: Response) => res.send("API Running..."));
+app.get("/", (_req: Request, res: Response) => {
+  return res.send("API Running...");
+});
 
 // Routes
 app.use("/api/users", require("./routes/api/users"));
