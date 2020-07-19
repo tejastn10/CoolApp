@@ -8,6 +8,10 @@ const app: Application = express();
 // * Connect DataBase
 connectDB();
 
+// * Init Middleware
+app.use(cors());
+app.use(json());
+
 app.get("/", (_req: Request, res: Response) => {
   return res.send("API Running...");
 });
@@ -19,8 +23,5 @@ app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/posts", require("./routes/api/posts"));
 
 const PORT: string | number = process.env.PORT || 5000;
-
-app.use(cors());
-app.use(json());
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
