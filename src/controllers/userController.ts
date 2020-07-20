@@ -55,7 +55,7 @@ export const user_post = async (req: Request, res: Response) => {
       },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res.json({ token }); // ! JSON Format is not returned on api call
       }
     );
 
