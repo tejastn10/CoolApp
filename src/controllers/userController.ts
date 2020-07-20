@@ -55,8 +55,11 @@ export const user_post = async (req: Request, res: Response) => {
       },
       (err, token) => {
         if (err) throw err;
+        console.log("====================================");
+        console.log(token);
+        console.log("====================================");
         res.json({ token }); // ! JSON Format is not returned on api call
-      }
+      },
     );
 
     res.send("User Registered");
