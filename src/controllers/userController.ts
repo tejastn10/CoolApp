@@ -3,6 +3,7 @@ import { User } from "../models/User.model";
 import { validationResult } from "express-validator";
 import { genSalt, hash } from "bcryptjs";
 import { url } from "gravatar";
+import { sign } from "jsonwebtoken";
 
 export const user_post = async (req: Request, res: Response) => {
   const errors = validationResult(req);
@@ -39,7 +40,24 @@ export const user_post = async (req: Request, res: Response) => {
     user.password = await hash(password, salt);
     await user.save();
 
-    // TODO Return JSON WebToken
+    // * Return JSON WebToken
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+
+    sign(
+      payload,
+      process.env["jwtSecret"]!,
+      {
+        expiresIn: 360000, // ! To Change in production
+      },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
 
     res.send("User Registered");
   } catch (err) {

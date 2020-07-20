@@ -14,6 +14,7 @@ const User_model_1 = require("../models/User.model");
 const express_validator_1 = require("express-validator");
 const bcryptjs_1 = require("bcryptjs");
 const gravatar_1 = require("gravatar");
+const jsonwebtoken_1 = require("jsonwebtoken");
 exports.user_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {
@@ -42,7 +43,19 @@ exports.user_post = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const salt = yield bcryptjs_1.genSalt(10);
         user.password = yield bcryptjs_1.hash(password, salt);
         yield user.save();
-        // TODO Return JSON WebToken
+        // * Return JSON WebToken
+        const payload = {
+            user: {
+                id: user.id,
+            },
+        };
+        jsonwebtoken_1.sign(payload, process.env["jwtSecret"], {
+            expiresIn: 360000,
+        }, (err, token) => {
+            if (err)
+                throw err;
+            res.json({ token });
+        });
         res.send("User Registered");
     }
     catch (err) {
