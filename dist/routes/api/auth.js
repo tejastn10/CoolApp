@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const auth_1 = __importDefault(require("../../middleware/auth"));
 const User_model_1 = require("../../models/User.model");
+const express_validator_1 = require("express-validator");
+const authController_1 = require("../../controllers/authController");
 const router = express_1.Router();
 // @route   Get api/auth
 // @desc    Test route
@@ -29,4 +31,11 @@ router.get("/", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, 
         res.status(500).send("Server Error!");
     }
 }));
+// @route   Post api/auth
+// @desc    Authenticate user & get token
+// @access  Public
+router.post("/", [
+    express_validator_1.check("email", "Please inlcude a valid Email!").isEmail(),
+    express_validator_1.check("password", "Password is required").exists(),
+], authController_1.auth_post);
 module.exports = router;

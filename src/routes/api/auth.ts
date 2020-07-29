@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
 import auth from "../../middleware/auth";
 import { User } from "../../models/User.model";
+import { check } from "express-validator";
+import { auth_post } from "../../controllers/authController";
 
 const router: Router = Router();
 
@@ -17,5 +19,17 @@ router.get("/", auth, async (req: Request, res: Response) => {
     res.status(500).send("Server Error!");
   }
 });
+
+// @route   Post api/auth
+// @desc    Authenticate user & get token
+// @access  Public
+router.post(
+  "/",
+  [
+    check("email", "Please inlcude a valid Email!").isEmail(),
+    check("password", "Password is required").exists(),
+  ],
+  auth_post
+);
 
 module.exports = router;
