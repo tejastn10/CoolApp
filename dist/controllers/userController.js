@@ -54,12 +54,8 @@ exports.user_post = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         }, (err, token) => {
             if (err)
                 throw err;
-            console.log("====================================");
-            console.log(token);
-            console.log("====================================");
-            res.json({ token }); // ! JSON Format is not returned on api call
+            res.json({ token });
         });
-        res.send("User Registered");
     }
     catch (err) {
         console.error(err.message);

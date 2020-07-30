@@ -21,7 +21,7 @@ export const auth_post = async (req: Request, res: Response) => {
     }
 
     // ! Check Password
-    const isMatch = await compare(password, <string>user.password);
+    const isMatch = await compare(password, <string> user.password);
 
     if (!isMatch) {
       return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
@@ -42,14 +42,9 @@ export const auth_post = async (req: Request, res: Response) => {
       },
       (err, token) => {
         if (err) throw err;
-        console.log("====================================");
-        console.log(token);
-        console.log("====================================");
-        return res.json({ token }); // ! JSON Format is not returned on api call
-      }
+        return res.json({ token });
+      },
     );
-
-    res.send("User Registered");
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error!");
