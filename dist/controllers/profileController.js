@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.del_user = exports.prof_post = exports.prof_user_get = exports.user_id_get = exports.users_get = void 0;
+exports.del_user = exports.del_holidays = exports.put_holidays = exports.prof_post = exports.prof_user_get = exports.user_id_get = exports.users_get = void 0;
 const Profile_model_1 = require("./../models/Profile.model");
 const User_model_1 = require("./../models/User.model");
 const express_validator_1 = require("express-validator");
@@ -103,6 +103,38 @@ exports.prof_post = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         // * Create Profile
         profile = new Profile_model_1.Profile(profileFields);
         yield profile.save();
+        res.json(profile);
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error!");
+    }
+});
+exports.put_holidays = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const errors = express_validator_1.validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { title, location, from, to, current, description } = req.body;
+    const newHoliday = { title, location, from, to, current, description };
+    try {
+        const profile = yield Profile_model_1.Profile.findOne({ user: req.user.id });
+        profile === null || profile === void 0 ? void 0 : profile.holidays.unshift(newHoliday);
+        yield (profile === null || profile === void 0 ? void 0 : profile.save());
+        res.json(profile);
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error!");
+    }
+});
+exports.del_holidays = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const profile = yield Profile_model_1.Profile.findOne({ user: req.user.id });
+        // Get Remove Index
+        const removeIndex = profile === null || profile === void 0 ? void 0 : profile.holidays.map((item) => item.id).indexOf(req.params.holi_id);
+        profile === null || profile === void 0 ? void 0 : profile.holidays.splice(removeIndex, 1);
+        yield (profile === null || profile === void 0 ? void 0 : profile.save());
         res.json(profile);
     }
     catch (err) {

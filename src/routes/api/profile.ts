@@ -7,6 +7,8 @@ import {
   users_get,
   user_id_get,
   del_user,
+  put_holidays,
+  del_holidays,
 } from "../../controllers/profileController";
 
 const router: Router = Router();
@@ -42,6 +44,25 @@ router.post(
   ],
   prof_post
 );
+
+// @route   Put api/profile/holidays
+// @desc    Add holidays
+// @access  Private
+router.put(
+  "/holidays",
+  auth,
+  [
+    check("title", "Title is required").not().isEmpty(),
+    check("location", "Location is required").not().isEmpty(),
+    check("from", "From is required").not().isEmpty(),
+  ],
+  put_holidays
+);
+
+// @route   Delete api/profile/holidays/:holi_id
+// @desc    Delete Holidays
+// @access  Private
+router.delete("/holidays/:holi_id", auth, del_holidays);
 
 // ! Deleting user profile
 

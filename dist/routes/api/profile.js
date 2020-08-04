@@ -29,6 +29,18 @@ router.post("/", auth_1.default, [
     express_validator_1.check("jobstatus", "Job status is required").not().isEmpty(),
     express_validator_1.check("hobbies", "Hobbies are required").not().isEmpty(),
 ], profileController_1.prof_post);
+// @route   Put api/profile/holidays
+// @desc    Add holidays
+// @access  Private
+router.put("/holidays", auth_1.default, [
+    express_validator_1.check("title", "Title is required").not().isEmpty(),
+    express_validator_1.check("location", "Location is required").not().isEmpty(),
+    express_validator_1.check("from", "From is required").not().isEmpty(),
+], profileController_1.put_holidays);
+// @route   Delete api/profile/holidays/:holi_id
+// @desc    Delete Holidays
+// @access  Private
+router.delete("/holidays/:holi_id", auth_1.default, profileController_1.del_holidays);
 // ! Deleting user profile
 // @route   Delete api/profile
 // @desc    Delete profile, user and posts

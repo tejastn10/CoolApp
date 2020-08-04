@@ -116,6 +116,50 @@ export const prof_post = async (req: Request, res: Response) => {
   }
 };
 
+export const put_holidays = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { title, location, from, to, current, description } = req.body;
+
+  const newHoliday = { title, location, from, to, current, description };
+
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    profile?.holidays.unshift(newHoliday);
+    await profile?.save();
+
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error!");
+  }
+};
+
+export const del_holidays = async (req: Request, res: Response) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    // Get Remove Index
+    const removeIndex = profile?.holidays
+      .map((item) => item.id)
+      .indexOf(req.params.holi_id);
+
+    profile?.holidays.splice(removeIndex!, 1);
+
+    await profile?.save();
+
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error!");
+  }
+};
+
 export const del_user = async (req: Request, res: Response) => {
   try {
     // TODO: Remove users and posts
