@@ -146,7 +146,7 @@ export const del_holidays = async (req: Request, res: Response) => {
 
     // Get Remove Index
     const removeIndex = profile?.holidays
-      .map((item) => item.id)
+      .map((item: any) => item.id) // ! Type used any
       .indexOf(req.params.holi_id);
 
     profile?.holidays.splice(removeIndex!, 1);
