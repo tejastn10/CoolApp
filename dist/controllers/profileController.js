@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.prof_post = exports.prof_user_get = exports.user_id_get = exports.users_get = void 0;
+exports.del_user = exports.prof_post = exports.prof_user_get = exports.user_id_get = exports.users_get = void 0;
 const Profile_model_1 = require("./../models/Profile.model");
+const User_model_1 = require("./../models/User.model");
 const express_validator_1 = require("express-validator");
 exports.users_get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -103,6 +104,19 @@ exports.prof_post = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         profile = new Profile_model_1.Profile(profileFields);
         yield profile.save();
         res.json(profile);
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error!");
+    }
+});
+exports.del_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // ! Remove Profile
+        yield Profile_model_1.Profile.findOneAndRemove({ user: req.user.id });
+        // ! Remove User
+        yield User_model_1.User.findOneAndRemove({ _id: req.user.id });
+        res.json({ msg: "User Deleted!" });
     }
     catch (err) {
         console.error(err.message);

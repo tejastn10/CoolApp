@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Profile } from "./../models/Profile.model";
+import { User } from "./../models/User.model";
 import { validationResult } from "express-validator";
 
 export const users_get = async (req: Request, res: Response) => {
@@ -109,6 +110,19 @@ export const prof_post = async (req: Request, res: Response) => {
 
     await profile.save();
     res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error!");
+  }
+};
+
+export const del_user = async (req: Request, res: Response) => {
+  try {
+    // ! Remove Profile
+    await Profile.findOneAndRemove({ user: req.user.id });
+    // ! Remove User
+    await User.findOneAndRemove({ _id: req.user.id });
+    res.json({ msg: "User Deleted!" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error!");

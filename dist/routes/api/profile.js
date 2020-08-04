@@ -29,4 +29,9 @@ router.post("/", auth_1.default, [
     express_validator_1.check("jobstatus", "Job status is required").not().isEmpty(),
     express_validator_1.check("hobbies", "Hobbies are required").not().isEmpty(),
 ], profileController_1.prof_post);
+// ! Deleting user profile
+// @route   Delete api/profile
+// @desc    Delete profile, user and posts
+// @access  Private
+router.delete("/", auth_1.default, profileController_1.del_user);
 module.exports = router;

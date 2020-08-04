@@ -6,6 +6,7 @@ import {
   prof_user_get,
   users_get,
   user_id_get,
+  del_user,
 } from "../../controllers/profileController";
 
 const router: Router = Router();
@@ -41,5 +42,12 @@ router.post(
   ],
   prof_post
 );
+
+// ! Deleting user profile
+
+// @route   Delete api/profile
+// @desc    Delete profile, user and posts
+// @access  Private
+router.delete("/", auth, del_user);
 
 module.exports = router;
