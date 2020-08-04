@@ -2,17 +2,26 @@ import { Request, Response } from "express";
 import { Profile } from "./../models/Profile.model";
 import { validationResult } from "express-validator";
 
+export const users_get = async (req: Request, res: Response) => {
+  try {
+    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error!");
+  }
+};
+
 export const prof_user_get = async (req: Request, res: Response) => {
   try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate(
-      "user",
-      ["name", "avatar"],
-    );
+    const profile = await Profile.findOne({
+      user: req.user.id,
+    }).populate("user", ["name", "avatar"]);
 
     if (!profile) {
-      return res.status(400).json(
-        { msg: "There is no Profile for this user!" },
-      );
+      return res
+        .status(400)
+        .json({ msg: "There is no Profile for this user!" });
     }
 
     res.json(profile);
@@ -47,9 +56,9 @@ export const prof_post = async (req: Request, res: Response) => {
   if (twitter) profileFields.social.twitter = twitter;
   if (instagram) profileFields.social.instagram = instagram;
   if (hobbies) {
-    profileFields.hobbies = hobbies.split(",").map((hobby: String) =>
-      hobby.trim()
-    );
+    profileFields.hobbies = hobbies
+      .split(",")
+      .map((hobby: String) => hobby.trim());
   }
 
   try {
@@ -70,7 +79,7 @@ export const prof_post = async (req: Request, res: Response) => {
             jobstatus,
           },
         },
-        { new: true },
+        { new: true }
       );
 
       return res.json(profile);

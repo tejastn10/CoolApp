@@ -8,6 +8,10 @@ const auth_1 = __importDefault(require("../../middleware/auth"));
 const express_validator_1 = require("express-validator");
 const profileController_1 = require("../../controllers/profileController");
 const router = express_1.Router();
+// @route   Get api/profile
+// @desc    Get all profiles
+// @access  Public
+router.get("/", profileController_1.users_get);
 // @route   Get api/profile/me
 // @desc    Get current user's profile
 // @access  Private
