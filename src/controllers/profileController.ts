@@ -147,7 +147,7 @@ export const del_holidays = async (req: Request, res: Response) => {
 
     // Get Remove Index
     const removeIndex = profile?.holidays
-      .map((item: any) => item.id) // ! Type used any
+      .map((item: any) => item.id) // TODO: Change type
       .indexOf(req.params.holi_id);
 
     profile?.holidays.splice(removeIndex!, 1);
@@ -200,7 +200,7 @@ export const del_edu = async (req: Request, res: Response) => {
 
     // Get Remove Index
     const removeIndex = profile?.education
-      .map((item: any) => item.id)
+      .map((item: any) => item.id) // TODO: Change type
       .indexOf(req.params.edu_id);
 
     profile?.education.splice(removeIndex!, 1);
