@@ -118,6 +118,8 @@ export const prof_post = async (req: Request, res: Response) => {
 
 export const del_user = async (req: Request, res: Response) => {
   try {
+    // TODO: Remove users and posts
+
     // ! Remove Profile
     await Profile.findOneAndRemove({ user: req.user.id });
     // ! Remove User

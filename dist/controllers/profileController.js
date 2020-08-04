@@ -112,6 +112,7 @@ exports.prof_post = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.del_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // TODO: Remove users and posts
         // ! Remove Profile
         yield Profile_model_1.Profile.findOneAndRemove({ user: req.user.id });
         // ! Remove User
