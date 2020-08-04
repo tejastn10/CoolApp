@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.del_user = exports.del_holidays = exports.put_holidays = exports.prof_post = exports.prof_user_get = exports.user_id_get = exports.users_get = void 0;
+exports.del_user = exports.del_edu = exports.put_edu = exports.del_holidays = exports.put_holidays = exports.prof_post = exports.prof_user_get = exports.user_id_get = exports.users_get = void 0;
 const Profile_model_1 = require("./../models/Profile.model");
 const User_model_1 = require("./../models/User.model");
 const express_validator_1 = require("express-validator");
@@ -28,8 +28,9 @@ exports.user_id_get = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const profile = yield Profile_model_1.Profile.findOne({
             user: req.params.user_id,
         }).populate("user", ["name", "avatar"]);
-        if (!profile)
+        if (!profile) {
             return res.status(400).json({ msg: "No Profile for this user" });
+        }
         res.json(profile);
     }
     catch (err) {
@@ -134,6 +135,46 @@ exports.del_holidays = (req, res) => __awaiter(void 0, void 0, void 0, function*
         // Get Remove Index
         const removeIndex = profile === null || profile === void 0 ? void 0 : profile.holidays.map((item) => item.id).indexOf(req.params.holi_id);
         profile === null || profile === void 0 ? void 0 : profile.holidays.splice(removeIndex, 1);
+        yield (profile === null || profile === void 0 ? void 0 : profile.save());
+        res.json(profile);
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error!");
+    }
+});
+exports.put_edu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const errors = express_validator_1.validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { school, degree, fieldofstudy, from, to, current, description } = req.body;
+    const newEdu = {
+        school,
+        degree,
+        fieldofstudy,
+        from,
+        to,
+        current,
+        description,
+    };
+    try {
+        const profile = yield Profile_model_1.Profile.findOne({ user: req.user.id });
+        profile === null || profile === void 0 ? void 0 : profile.education.unshift(newEdu);
+        yield (profile === null || profile === void 0 ? void 0 : profile.save());
+        res.json(profile);
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error!");
+    }
+});
+exports.del_edu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const profile = yield Profile_model_1.Profile.findOne({ user: req.user.id });
+        // Get Remove Index
+        const removeIndex = profile === null || profile === void 0 ? void 0 : profile.education.map((item) => item.id).indexOf(req.params.edu_id);
+        profile === null || profile === void 0 ? void 0 : profile.education.splice(removeIndex, 1);
         yield (profile === null || profile === void 0 ? void 0 : profile.save());
         res.json(profile);
     }

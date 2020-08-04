@@ -29,6 +29,7 @@ router.post("/", auth_1.default, [
     express_validator_1.check("jobstatus", "Job status is required").not().isEmpty(),
     express_validator_1.check("hobbies", "Hobbies are required").not().isEmpty(),
 ], profileController_1.prof_post);
+// ? Holidays
 // @route   Put api/profile/holidays
 // @desc    Add holidays
 // @access  Private
@@ -41,6 +42,20 @@ router.put("/holidays", auth_1.default, [
 // @desc    Delete Holidays
 // @access  Private
 router.delete("/holidays/:holi_id", auth_1.default, profileController_1.del_holidays);
+// ? Education
+// @route   Put api/profile/education
+// @desc    Add Education
+// @access  Private
+router.put("/education", auth_1.default, [
+    express_validator_1.check("school", "School is required").not().isEmpty(),
+    express_validator_1.check("degree", "Degree is required").not().isEmpty(),
+    express_validator_1.check("fieldofstudy", "Field of Study is required").not().isEmpty(),
+    express_validator_1.check("from", "From is required").not().isEmpty(),
+], profileController_1.put_edu);
+// @route   Delete api/profile/education/:edu_id
+// @desc    Delete Education
+// @access  Private
+router.delete("/education/:edu_id", auth_1.default, profileController_1.del_edu);
 // ! Deleting user profile
 // @route   Delete api/profile
 // @desc    Delete profile, user and posts

@@ -19,8 +19,9 @@ export const user_id_get = async (req: Request, res: Response) => {
       user: req.params.user_id,
     }).populate("user", ["name", "avatar"]);
 
-    if (!profile)
+    if (!profile) {
       return res.status(400).json({ msg: "No Profile for this user" });
+    }
 
     res.json(profile);
   } catch (err) {
@@ -99,7 +100,7 @@ export const prof_post = async (req: Request, res: Response) => {
             jobstatus,
           },
         },
-        { new: true }
+        { new: true },
       );
 
       return res.json(profile);
@@ -150,6 +151,59 @@ export const del_holidays = async (req: Request, res: Response) => {
       .indexOf(req.params.holi_id);
 
     profile?.holidays.splice(removeIndex!, 1);
+
+    await profile?.save();
+
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error!");
+  }
+};
+
+export const put_edu = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { school, degree, fieldofstudy, from, to, current, description } =
+    req.body;
+
+  const newEdu = {
+    school,
+    degree,
+    fieldofstudy,
+    from,
+    to,
+    current,
+    description,
+  };
+
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    profile?.education.unshift(newEdu);
+    await profile?.save();
+
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error!");
+  }
+};
+
+export const del_edu = async (req: Request, res: Response) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    // Get Remove Index
+    const removeIndex = profile?.education
+      .map((item: any) => item.id)
+      .indexOf(req.params.edu_id);
+
+    profile?.education.splice(removeIndex!, 1);
 
     await profile?.save();
 
