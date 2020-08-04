@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import auth from "../../middleware/auth";
-import { Profile } from "../../models/Profile.model";
+import { check } from "express-validator";
+import { prof_post, prof_user_get } from "../../controllers/profileController";
 
 const router: Router = Router();
 
@@ -10,25 +11,20 @@ const router: Router = Router();
 router.get(
   "/me",
   auth,
-  async (req: Request, res: Response) => {
-    try {
-      const profile = await Profile.findOne({ user: req.user.id }).populate(
-        "user",
-        ["name", "avatar"],
-      );
+  prof_user_get,
+);
 
-      if (!profile) {
-        return res.status(400).json(
-          { msg: "There is no Profile for this user!" },
-        );
-      }
-
-      res.json(profile);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error!");
-    }
-  },
+// @route   Post api/profile
+// @desc    Create or Update user's profile
+// @access  Private
+router.post(
+  "/",
+  auth,
+  [
+    check("jobstatus", "Job status is required").not().isEmpty(),
+    check("hobbies", "Hobbies are required").not().isEmpty(),
+  ],
+  prof_post,
 );
 
 module.exports = router;

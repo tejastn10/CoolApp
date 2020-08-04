@@ -23,6 +23,7 @@ exports.connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
+            useFindAndModify: false,
         });
         console.log("MongoDB Connected...");
     }
