@@ -12,6 +12,25 @@ export const users_get = async (req: Request, res: Response) => {
   }
 };
 
+export const user_id_get = async (req: Request, res: Response) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.params.user_id,
+    }).populate("user", ["name", "avatar"]);
+
+    if (!profile)
+      return res.status(400).json({ msg: "No Profile for this user" });
+
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == "ObjectId") {
+      return res.status(400).json({ msg: "No User Profile Found" });
+    }
+    res.status(500).send("Server Error!");
+  }
+};
+
 export const prof_user_get = async (req: Request, res: Response) => {
   try {
     const profile = await Profile.findOne({

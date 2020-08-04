@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.prof_post = exports.prof_user_get = exports.users_get = void 0;
+exports.prof_post = exports.prof_user_get = exports.user_id_get = exports.users_get = void 0;
 const Profile_model_1 = require("./../models/Profile.model");
 const express_validator_1 = require("express-validator");
 exports.users_get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -19,6 +19,23 @@ exports.users_get = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (err) {
         console.error(err.message);
+        res.status(500).send("Server Error!");
+    }
+});
+exports.user_id_get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const profile = yield Profile_model_1.Profile.findOne({
+            user: req.params.user_id,
+        }).populate("user", ["name", "avatar"]);
+        if (!profile)
+            return res.status(400).json({ msg: "No Profile for this user" });
+        res.json(profile);
+    }
+    catch (err) {
+        console.error(err.message);
+        if (err.kind == "ObjectId") {
+            return res.status(400).json({ msg: "No User Profile Found" });
+        }
         res.status(500).send("Server Error!");
     }
 });
