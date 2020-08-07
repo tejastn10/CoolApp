@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.post_post = void 0;
+exports.del_postbyid = exports.get_postbyid = exports.get_post = exports.post_post = void 0;
 const User_model_1 = require("./../models/User.model");
 const Post_model_1 = require("./../models/Post.model");
 const express_validator_1 = require("express-validator");
@@ -32,6 +32,53 @@ exports.post_post = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (err) {
         console.error(err.message);
+        res.status(500).send("Server Error!");
+    }
+});
+exports.get_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield Post_model_1.Post.find().sort({ date: -1 });
+        res.json(posts);
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error!");
+    }
+});
+exports.get_postbyid = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const post = yield Post_model_1.Post.findById(req.params.id);
+        if (!post) {
+            res.status(404).json({ msg: "Post not found" });
+        }
+        res.json(post);
+    }
+    catch (err) {
+        console.error(err.message);
+        if (err.kind === "ObjectId") {
+            res.status(404).json({ msg: "Post not found" });
+        }
+        res.status(500).send("Server Error!");
+    }
+});
+exports.del_postbyid = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const post = yield Post_model_1.Post.findById(req.params.id);
+        if (!post) {
+            res.status(404).json({ msg: "Post not found" });
+        }
+        // ? Check user
+        if ((post === null || post === void 0 ? void 0 : post.user.toString()) !== req.user.id) {
+            return res.status(401).json({ msg: "User not authorized" });
+        }
+        yield (post === null || post === void 0 ? void 0 : post.remove());
+        res.json({ msg: "Post Deleted!" });
+    }
+    catch (err) {
+        console.error(err.message);
+        if (err.kind === "ObjectId") {
+            res.status(404).json({ msg: "Post not found" });
+        }
         res.status(500).send("Server Error!");
     }
 });
