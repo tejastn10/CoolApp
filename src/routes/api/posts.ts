@@ -8,6 +8,8 @@ import {
   del_postbyid,
   put_like,
   put_unlike,
+  post_comment,
+  del_comment,
 } from "../../controllers/postController";
 
 const router: Router = Router();
@@ -49,5 +51,20 @@ router.put("/like/:id", auth, put_like);
 // @desc    Unlike a post
 // @access  Private
 router.put("/unlike/:id", auth, put_unlike);
+
+// @route   Post api/posts/comment/:id
+// @desc    Comment on a Post
+// @access  Private
+router.post(
+  "/comment/:id",
+  auth,
+  [check("text", "Text is required").not().isEmpty()],
+  post_comment
+);
+
+// @route   Delete api/posts/comment/:id/:comment_id
+// @desc    Delete a Comment of a Post
+// @access  Private
+router.delete("/comment/:id/:comment_id", auth, del_comment);
 
 module.exports = router;

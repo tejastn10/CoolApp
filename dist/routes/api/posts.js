@@ -35,4 +35,12 @@ router.put("/like/:id", auth_1.default, postController_1.put_like);
 // @desc    Unlike a post
 // @access  Private
 router.put("/unlike/:id", auth_1.default, postController_1.put_unlike);
+// @route   Post api/posts/comment/:id
+// @desc    Comment on a Post
+// @access  Private
+router.post("/comment/:id", auth_1.default, [express_validator_1.check("text", "Text is required").not().isEmpty()], postController_1.post_comment);
+// @route   Delete api/posts/comment/:id/:comment_id
+// @desc    Delete a Comment of a Post
+// @access  Private
+router.delete("/comment/:id/:comment_id", auth_1.default, postController_1.del_comment);
 module.exports = router;
