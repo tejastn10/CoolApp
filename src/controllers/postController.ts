@@ -144,6 +144,7 @@ export const post_comment = async (req: Request, res: Response) => {
     const user = await User.findById(req.user.id).select("-password");
     const post = await Post.findById(req.params.id);
 
+    // TODO: type to be changed
     const newComment: any = {
       user: req.user.id,
       text: req.body.text,
@@ -168,7 +169,7 @@ export const del_comment = async (req: Request, res: Response) => {
 
     // * Get the comment
     const comment = post?.comments.find(
-      (comment: any) => comment.id === req.params.comment_id
+      (comment: any) => comment.id === req.params.comment_id // TODOD: type to be changed
     );
 
     // ? Comment exists
