@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.del_postbyid = exports.get_postbyid = exports.get_post = exports.post_post = void 0;
+exports.put_unlike = exports.put_like = exports.del_postbyid = exports.get_postbyid = exports.get_post = exports.post_post = void 0;
 const User_model_1 = require("./../models/User.model");
 const Post_model_1 = require("./../models/Post.model");
 const express_validator_1 = require("express-validator");
@@ -79,6 +79,40 @@ exports.del_postbyid = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (err.kind === "ObjectId") {
             res.status(404).json({ msg: "Post not found" });
         }
+        res.status(500).send("Server Error!");
+    }
+});
+exports.put_like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const post = yield Post_model_1.Post.findById(req.params.id);
+        // ? Check if already liked
+        if ((post === null || post === void 0 ? void 0 : post.likes.filter((like) => like.user.toString() === req.user.id).length) > 0) {
+            return res.status(400).json({ msg: "Post already liked" });
+        }
+        post === null || post === void 0 ? void 0 : post.likes.unshift({ user: req.user.id });
+        yield (post === null || post === void 0 ? void 0 : post.save());
+        res.json(post === null || post === void 0 ? void 0 : post.likes);
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error!");
+    }
+});
+exports.put_unlike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const post = yield Post_model_1.Post.findById(req.params.id);
+        // ? Check if already unliked
+        if ((post === null || post === void 0 ? void 0 : post.likes.filter((like) => like.user.toString() === req.user.id).length) === 0) {
+            return res.status(400).json({ msg: "Post already unliked" });
+        }
+        // * Get Remove Index
+        const removeIndex = post === null || post === void 0 ? void 0 : post.likes.map((like) => like.user.toString()).indexOf(req.user.id);
+        post === null || post === void 0 ? void 0 : post.likes.splice(removeIndex, 1);
+        yield (post === null || post === void 0 ? void 0 : post.save());
+        res.json(post === null || post === void 0 ? void 0 : post.likes);
+    }
+    catch (err) {
+        console.error(err.message);
         res.status(500).send("Server Error!");
     }
 });

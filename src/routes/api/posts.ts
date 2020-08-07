@@ -6,6 +6,8 @@ import {
   get_post,
   get_postbyid,
   del_postbyid,
+  put_like,
+  put_unlike,
 } from "../../controllers/postController";
 
 const router: Router = Router();
@@ -37,5 +39,15 @@ router.get("/:id", auth, get_postbyid);
 // @desc    Delete post by id
 // @access  Private
 router.delete("/:id", auth, del_postbyid);
+
+// @route   Put api/posts/like/:id
+// @desc    Like a post
+// @access  Private
+router.put("/like/:id", auth, put_like);
+
+// @route   Put api/posts/unlike/:id
+// @desc    Unlike a post
+// @access  Private
+router.put("/unlike/:id", auth, put_unlike);
 
 module.exports = router;
