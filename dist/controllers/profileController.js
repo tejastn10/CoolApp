@@ -13,14 +13,14 @@ exports.del_user = exports.del_edu = exports.put_edu = exports.del_holidays = ex
 const Profile_model_1 = require("./../models/Profile.model");
 const User_model_1 = require("./../models/User.model");
 const express_validator_1 = require("express-validator");
+const Error_1 = require("./../global/Error");
 exports.users_get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const profiles = yield Profile_model_1.Profile.find().populate("user", ["name", "avatar"]);
         res.json(profiles);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.user_id_get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -34,11 +34,10 @@ exports.user_id_get = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json(profile);
     }
     catch (err) {
-        console.error(err.message);
         if (err.kind == "ObjectId") {
             return res.status(400).json({ msg: "No User Profile Found" });
         }
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.prof_user_get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -54,8 +53,7 @@ exports.prof_user_get = (req, res) => __awaiter(void 0, void 0, void 0, function
         res.json(profile);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.prof_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -107,8 +105,7 @@ exports.prof_post = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json(profile);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.put_holidays = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -125,8 +122,7 @@ exports.put_holidays = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.json(profile);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.del_holidays = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -139,8 +135,7 @@ exports.del_holidays = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.json(profile);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.put_edu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -148,7 +143,7 @@ exports.put_edu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    const { school, degree, fieldofstudy, from, to, current, description } = req.body;
+    const { school, degree, fieldofstudy, from, to, current, description, } = req.body;
     const newEdu = {
         school,
         degree,
@@ -165,8 +160,7 @@ exports.put_edu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(profile);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.del_edu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -179,8 +173,7 @@ exports.del_edu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(profile);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.del_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -193,7 +186,6 @@ exports.del_user = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.json({ msg: "User Deleted!" });
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });

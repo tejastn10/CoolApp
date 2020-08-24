@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import { Profile } from "./../models/Profile.model";
 import { User } from "./../models/User.model";
 import { validationResult } from "express-validator";
+import { LogErr } from "./../global/Error";
 
 export const users_get = async (req: Request, res: Response) => {
   try {
     const profiles = await Profile.find().populate("user", ["name", "avatar"]);
     res.json(profiles);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -25,11 +25,10 @@ export const user_id_get = async (req: Request, res: Response) => {
 
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
     if (err.kind == "ObjectId") {
       return res.status(400).json({ msg: "No User Profile Found" });
     }
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -47,8 +46,7 @@ export const prof_user_get = async (req: Request, res: Response) => {
 
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -100,7 +98,7 @@ export const prof_post = async (req: Request, res: Response) => {
             jobstatus,
           },
         },
-        { new: true },
+        { new: true }
       );
 
       return res.json(profile);
@@ -112,8 +110,7 @@ export const prof_post = async (req: Request, res: Response) => {
     await profile.save();
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -136,8 +133,7 @@ export const put_holidays = async (req: Request, res: Response) => {
 
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -156,8 +152,7 @@ export const del_holidays = async (req: Request, res: Response) => {
 
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -168,8 +163,15 @@ export const put_edu = async (req: Request, res: Response) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { school, degree, fieldofstudy, from, to, current, description } =
-    req.body;
+  const {
+    school,
+    degree,
+    fieldofstudy,
+    from,
+    to,
+    current,
+    description,
+  } = req.body;
 
   const newEdu = {
     school,
@@ -189,8 +191,7 @@ export const put_edu = async (req: Request, res: Response) => {
 
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -209,8 +210,7 @@ export const del_edu = async (req: Request, res: Response) => {
 
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -224,7 +224,6 @@ export const del_user = async (req: Request, res: Response) => {
     await User.findOneAndRemove({ _id: req.user.id });
     res.json({ msg: "User Deleted!" });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };

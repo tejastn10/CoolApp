@@ -3,6 +3,7 @@ import { User } from "./../models/User.model";
 import { Post } from "./../models/Post.model";
 import { validationResult } from "express-validator";
 import { IPostComment, PostComment } from "./../models/Comment.model";
+import { LogErr } from "./../global/Error";
 
 export const post_post = async (req: Request, res: Response) => {
   const errors = validationResult(req);
@@ -25,8 +26,7 @@ export const post_post = async (req: Request, res: Response) => {
 
     res.json(post);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -36,8 +36,7 @@ export const get_post = async (req: Request, res: Response) => {
 
     res.json(posts);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -51,11 +50,10 @@ export const get_postbyid = async (req: Request, res: Response) => {
 
     res.json(post);
   } catch (err) {
-    console.error(err.message);
     if (err.kind === "ObjectId") {
       res.status(404).json({ msg: "Post not found" });
     }
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -76,11 +74,10 @@ export const del_postbyid = async (req: Request, res: Response) => {
 
     res.json({ msg: "Post Deleted!" });
   } catch (err) {
-    console.error(err.message);
     if (err.kind === "ObjectId") {
       res.status(404).json({ msg: "Post not found" });
     }
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -102,8 +99,7 @@ export const put_like = async (req: Request, res: Response) => {
 
     res.json(post?.likes);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -130,8 +126,7 @@ export const put_unlike = async (req: Request, res: Response) => {
 
     res.json(post?.likes);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -163,8 +158,7 @@ export const post_comment = async (req: Request, res: Response) => {
 
     res.json(post?.comments);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };
 
@@ -198,7 +192,6 @@ export const del_comment = async (req: Request, res: Response) => {
 
     res.json(post?.comments);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };

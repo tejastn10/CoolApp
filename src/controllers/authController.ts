@@ -3,6 +3,7 @@ import { User } from "../models/User.model";
 import { validationResult } from "express-validator";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+import { LogErr } from "./../global/Error";
 
 export const auth_post = async (req: Request, res: Response) => {
   const errors = validationResult(req);
@@ -21,7 +22,7 @@ export const auth_post = async (req: Request, res: Response) => {
     }
 
     // ! Check Password
-    const isMatch = await compare(password, <string> user.password);
+    const isMatch = await compare(password, <string>user.password);
 
     if (!isMatch) {
       return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
@@ -43,10 +44,9 @@ export const auth_post = async (req: Request, res: Response) => {
       (err, token) => {
         if (err) throw err;
         return res.json({ token });
-      },
+      }
     );
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 };

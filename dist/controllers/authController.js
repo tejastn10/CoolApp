@@ -14,6 +14,7 @@ const User_model_1 = require("../models/User.model");
 const express_validator_1 = require("express-validator");
 const bcryptjs_1 = require("bcryptjs");
 const jsonwebtoken_1 = require("jsonwebtoken");
+const Error_1 = require("./../global/Error");
 exports.auth_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {
@@ -46,7 +47,6 @@ exports.auth_post = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
