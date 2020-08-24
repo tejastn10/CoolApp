@@ -13,6 +13,7 @@ exports.del_comment = exports.post_comment = exports.put_unlike = exports.put_li
 const User_model_1 = require("./../models/User.model");
 const Post_model_1 = require("./../models/Post.model");
 const express_validator_1 = require("express-validator");
+const Comment_model_1 = require("./../models/Comment.model");
 exports.post_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {
@@ -124,13 +125,16 @@ exports.post_comment = (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         const user = yield User_model_1.User.findById(req.user.id).select("-password");
         const post = yield Post_model_1.Post.findById(req.params.id);
-        // TODO: type to be changed
-        const newComment = {
+        // ? Check if USER is NULL
+        if (user === null) {
+            return res.status(401).json({ msg: "User is null" });
+        }
+        const newComment = new Comment_model_1.PostComment({
             user: req.user.id,
             text: req.body.text,
-            name: user === null || user === void 0 ? void 0 : user.name,
-            avatar: user === null || user === void 0 ? void 0 : user.avatar,
-        };
+            name: user.name,
+            avatar: user.avatar,
+        });
         post === null || post === void 0 ? void 0 : post.comments.unshift(newComment);
         yield post.save();
         res.json(post === null || post === void 0 ? void 0 : post.comments);
@@ -144,8 +148,7 @@ exports.del_comment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const post = yield Post_model_1.Post.findById(req.params.id);
         // * Get the comment
-        const comment = post === null || post === void 0 ? void 0 : post.comments.find((comment) => comment.id === req.params.comment_id // TODOD: type to be changed
-        );
+        const comment = post === null || post === void 0 ? void 0 : post.comments.find((comment) => comment.id === req.params.comment_id);
         // ? Comment exists
         if (!comment) {
             res.status(404).json({ msg: "Comment does not exists!" });

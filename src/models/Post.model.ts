@@ -1,4 +1,5 @@
 import { Schema, model, Document } from "mongoose";
+import { PostComment, IPostComment } from "./Comment.model";
 
 export interface IPost extends Document {
   user: Schema.Types.ObjectId;
@@ -11,15 +12,7 @@ export interface IPost extends Document {
       user: Schema.Types.ObjectId;
     }
   ];
-  comments: [
-    {
-      user: Schema.Types.ObjectId;
-      text: String;
-      name: String;
-      avatar: String;
-      date: Date;
-    }
-  ];
+  comments: [IPostComment];
   date: Date;
 }
 
