@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { User } from "./../models/User.model";
 import { Post } from "./../models/Post.model";
 import { validationResult } from "express-validator";
+import { IPostComment, PostComment } from "./../models/Comment.model";
 
 export const post_post = async (req: Request, res: Response) => {
   const errors = validationResult(req);
@@ -144,13 +145,17 @@ export const post_comment = async (req: Request, res: Response) => {
     const user = await User.findById(req.user.id).select("-password");
     const post = await Post.findById(req.params.id);
 
-    // TODO: type to be changed
-    const newComment: any = {
+    // ? Check if USER is NULL
+    if (user === null) {
+      return res.status(401).json({ msg: "User is null" });
+    }
+
+    const newComment: IPostComment = new PostComment({
       user: req.user.id,
       text: req.body.text,
-      name: user?.name,
-      avatar: user?.avatar,
-    };
+      name: user.name,
+      avatar: user.avatar,
+    });
 
     post?.comments.unshift(newComment);
 
@@ -169,7 +174,7 @@ export const del_comment = async (req: Request, res: Response) => {
 
     // * Get the comment
     const comment = post?.comments.find(
-      (comment: any) => comment.id === req.params.comment_id // TODOD: type to be changed
+      (comment: IPostComment) => comment.id === req.params.comment_id
     );
 
     // ? Comment exists
