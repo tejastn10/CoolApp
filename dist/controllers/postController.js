@@ -14,6 +14,7 @@ const User_model_1 = require("./../models/User.model");
 const Post_model_1 = require("./../models/Post.model");
 const express_validator_1 = require("express-validator");
 const Comment_model_1 = require("./../models/Comment.model");
+const Error_1 = require("./../global/Error");
 exports.post_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {
@@ -32,8 +33,7 @@ exports.post_post = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json(post);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.get_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,8 +42,7 @@ exports.get_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.json(posts);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.get_postbyid = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,11 +54,10 @@ exports.get_postbyid = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.json(post);
     }
     catch (err) {
-        console.error(err.message);
         if (err.kind === "ObjectId") {
             res.status(404).json({ msg: "Post not found" });
         }
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.del_postbyid = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -76,11 +74,10 @@ exports.del_postbyid = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.json({ msg: "Post Deleted!" });
     }
     catch (err) {
-        console.error(err.message);
         if (err.kind === "ObjectId") {
             res.status(404).json({ msg: "Post not found" });
         }
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.put_like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -95,8 +92,7 @@ exports.put_like = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.json(post === null || post === void 0 ? void 0 : post.likes);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.put_unlike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -113,8 +109,7 @@ exports.put_unlike = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.json(post === null || post === void 0 ? void 0 : post.likes);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.post_comment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -140,8 +135,7 @@ exports.post_comment = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.json(post === null || post === void 0 ? void 0 : post.comments);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });
 exports.del_comment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -164,7 +158,6 @@ exports.del_comment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json(post === null || post === void 0 ? void 0 : post.comments);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 });

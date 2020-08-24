@@ -3,6 +3,7 @@ import auth from "../../middleware/auth";
 import { User } from "../../models/User.model";
 import { check } from "express-validator";
 import { auth_post } from "../../controllers/authController";
+import { LogErr } from "./../../global/Error";
 
 const router: Router = Router();
 
@@ -15,8 +16,7 @@ router.get("/", auth, async (req: Request, res: Response) => {
 
     res.json(user);
   } catch (err) {
-    console.error(err.messade);
-    res.status(500).send("Server Error!");
+    LogErr(err, res);
   }
 });
 

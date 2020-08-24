@@ -17,6 +17,7 @@ const auth_1 = __importDefault(require("../../middleware/auth"));
 const User_model_1 = require("../../models/User.model");
 const express_validator_1 = require("express-validator");
 const authController_1 = require("../../controllers/authController");
+const Error_1 = require("./../../global/Error");
 const router = express_1.Router();
 // @route   Get api/auth
 // @desc    Test route
@@ -27,8 +28,7 @@ router.get("/", auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, 
         res.json(user);
     }
     catch (err) {
-        console.error(err.messade);
-        res.status(500).send("Server Error!");
+        Error_1.LogErr(err, res);
     }
 }));
 // @route   Post api/auth
