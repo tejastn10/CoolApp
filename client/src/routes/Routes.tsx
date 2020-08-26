@@ -1,11 +1,15 @@
 import React, { FC } from "react";
+import { Grid } from "@material-ui/core";
+
 import { Navbar } from "../components/layout/Navbar";
-import { Sidebar } from "../components/layout/Sidebar";
 
 export const Routes: FC = () => (
-  <div>
-    <Navbar />
-    <Sidebar />
-    Content
-  </div>
+  <Grid container direction="column">
+    <Grid item>
+      <Navbar />
+    </Grid>
+    <Grid item container>
+      Content
+    </Grid>
+  </Grid>
 );
