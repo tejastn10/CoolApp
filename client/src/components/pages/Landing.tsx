@@ -9,6 +9,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -19,6 +20,9 @@ const useStyles = makeStyles({
   },
   buttons: {
     justifyContent: "space-around",
+  },
+  link: {
+    textDecoration: "none",
   },
 });
 
@@ -44,12 +48,16 @@ export const Landing: FC = () => {
             </Typography>
           </CardContent>
           <CardActions className={classes.buttons}>
-            <Button size="medium" color="secondary" variant="contained">
-              Register
-            </Button>
-            <Button size="medium" color="primary" variant="outlined">
-              Log In
-            </Button>
+            <Link to="/register" className={classes.link}>
+              <Button size="medium" color="secondary" variant="contained">
+                Register
+              </Button>
+            </Link>
+            <Link to="/login" className={classes.link}>
+              <Button size="medium" color="primary" variant="outlined">
+                Log In
+              </Button>
+            </Link>
           </CardActions>
         </Card>
       </Grid>

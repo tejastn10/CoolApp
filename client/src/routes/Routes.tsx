@@ -1,9 +1,12 @@
 import React, { FC } from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Navbar } from "../components/layout/Navbar";
 import { Landing } from "../components/pages/Landing";
+import { Register } from "../components/pages/auth/Register";
+import { Login } from "../components/pages/auth/Login";
 
 const useStyles = makeStyles({
   header: {
@@ -18,13 +21,19 @@ export const Routes: FC = () => {
   const classes = useStyles();
 
   return (
-    <Grid container direction="column">
-      <Grid item className={classes.header}>
-        <Navbar />
+    <Router>
+      <Grid container direction="column">
+        <Grid item className={classes.header}>
+          <Navbar />
+        </Grid>
+        <Grid item container className={classes.layout}>
+          <Route exact path="/" component={Landing} />
+          <Switch>
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+          </Switch>
+        </Grid>
       </Grid>
-      <Grid item container className={classes.layout}>
-        <Landing />
-      </Grid>
-    </Grid>
+    </Router>
   );
 };
