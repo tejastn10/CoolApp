@@ -2,6 +2,9 @@ import React, { FC } from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+
+import store from "./../store";
 
 import { Navbar } from "../components/layout/Navbar";
 import { Landing } from "../components/pages/Landing";
@@ -21,19 +24,21 @@ export const Routes: FC = () => {
   const classes = useStyles();
 
   return (
-    <Router>
-      <Grid container direction="column">
-        <Grid item className={classes.header}>
-          <Navbar />
+    <Provider store={store}>
+      <Router>
+        <Grid container direction="column">
+          <Grid item className={classes.header}>
+            <Navbar />
+          </Grid>
+          <Grid item container className={classes.layout}>
+            <Route exact path="/" component={Landing} />
+            <Switch>
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+            </Switch>
+          </Grid>
         </Grid>
-        <Grid item container className={classes.layout}>
-          <Route exact path="/" component={Landing} />
-          <Switch>
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-          </Switch>
-        </Grid>
-      </Grid>
-    </Router>
+      </Router>
+    </Provider>
   );
 };
