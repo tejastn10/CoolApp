@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, FormEvent, ChangeEvent } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
@@ -40,11 +40,11 @@ export const Register: FC = () => {
 
   const { name, email, password, password2 } = formData;
 
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     return setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== password2) {
       console.log("password dont match");
@@ -60,7 +60,10 @@ export const Register: FC = () => {
         <Typography component="h1" variant="h3">
           Register
         </Typography>
-        <form className={classes.form} onSubmit={(e: any) => onSubmit(e)}>
+        <form
+          className={classes.form}
+          onSubmit={(e: FormEvent<HTMLFormElement>) => onSubmit(e)}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -70,7 +73,7 @@ export const Register: FC = () => {
                 fullWidth
                 name="name"
                 label="Name"
-                onChange={(e: any) => onChange(e)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -81,7 +84,7 @@ export const Register: FC = () => {
                 name="email"
                 label="Email Address"
                 value={email}
-                onChange={(e: any) => onChange(e)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
                 autoComplete="email"
               />
             </Grid>
@@ -91,7 +94,7 @@ export const Register: FC = () => {
                 required
                 fullWidth
                 value={password}
-                onChange={(e: any) => onChange(e)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
                 label="Password"
                 type="password"
                 name="password"
@@ -103,7 +106,7 @@ export const Register: FC = () => {
                 required
                 fullWidth
                 value={password2}
-                onChange={(e: any) => onChange(e)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
                 label="Confirm Password"
                 type="password"
                 name="password2"

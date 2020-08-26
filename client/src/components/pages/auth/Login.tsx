@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, ChangeEvent, FormEvent } from "react";
 import {
   makeStyles,
   Grid,
@@ -16,10 +16,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%",
@@ -43,11 +39,11 @@ export const Login: FC = () => {
 
   const { email, password } = formData;
 
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     return setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Success");
   };
@@ -57,9 +53,12 @@ export const Login: FC = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h3">
-          Sign in
+          Log in
         </Typography>
-        <form className={classes.form} onSubmit={(e: any) => onSubmit(e)}>
+        <form
+          className={classes.form}
+          onSubmit={(e: FormEvent<HTMLFormElement>) => onSubmit(e)}
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -69,7 +68,7 @@ export const Login: FC = () => {
             label="Email Address"
             name="email"
             autoComplete="email"
-            onChange={(e: any) => onChange(e)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
           />
           <TextField
             variant="outlined"
@@ -81,7 +80,7 @@ export const Login: FC = () => {
             type="password"
             value={password}
             autoComplete="current-password"
-            onChange={(e: any) => onChange(e)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
           />
           <Button
             type="submit"
@@ -90,7 +89,7 @@ export const Login: FC = () => {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Log In
           </Button>
           <Grid container>
             <Grid item xs></Grid>
