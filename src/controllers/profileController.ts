@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Profile } from "./../models/Profile.model";
 import { User } from "./../models/User.model";
 import { validationResult } from "express-validator";
-import { LogErr } from "./../global/Error";
+import { LogErr } from "../error/Error";
 
 export const users_get = async (req: Request, res: Response) => {
   try {

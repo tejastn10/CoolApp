@@ -3,7 +3,7 @@ import { User } from "./../models/User.model";
 import { Post } from "./../models/Post.model";
 import { validationResult } from "express-validator";
 import { IPostComment, PostComment } from "./../models/Comment.model";
-import { LogErr } from "./../global/Error";
+import { LogErr } from "../error/Error";
 
 export const post_post = async (req: Request, res: Response) => {
   const errors = validationResult(req);

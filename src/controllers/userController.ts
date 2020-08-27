@@ -4,7 +4,7 @@ import { validationResult } from "express-validator";
 import { genSalt, hash } from "bcryptjs";
 import { url } from "gravatar";
 import { sign } from "jsonwebtoken";
-import { LogErr } from "./../global/Error";
+import { LogErr } from "../error/Error";
 
 export const user_post = async (req: Request, res: Response) => {
   const errors = validationResult(req);

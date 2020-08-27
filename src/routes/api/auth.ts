@@ -3,7 +3,7 @@ import auth from "../../middleware/auth";
 import { User } from "../../models/User.model";
 import { check } from "express-validator";
 import { auth_post } from "../../controllers/authController";
-import { LogErr } from "./../../global/Error";
+import { LogErr } from "../../error/Error";
 
 const router: Router = Router();
 

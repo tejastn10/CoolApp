@@ -3,7 +3,7 @@ import { User } from "../models/User.model";
 import { validationResult } from "express-validator";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
-import { LogErr } from "./../global/Error";
+import { LogErr } from "../error/Error";
 
 export const auth_post = async (req: Request, res: Response) => {
   const errors = validationResult(req);
