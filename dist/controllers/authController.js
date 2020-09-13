@@ -14,7 +14,7 @@ const User_model_1 = require("../models/User.model");
 const express_validator_1 = require("express-validator");
 const bcryptjs_1 = require("bcryptjs");
 const jsonwebtoken_1 = require("jsonwebtoken");
-const Error_1 = require("./../global/Error");
+const Error_1 = require("../error/Error");
 exports.auth_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {

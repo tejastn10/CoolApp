@@ -14,7 +14,7 @@ const User_model_1 = require("./../models/User.model");
 const Post_model_1 = require("./../models/Post.model");
 const express_validator_1 = require("express-validator");
 const Comment_model_1 = require("./../models/Comment.model");
-const Error_1 = require("./../global/Error");
+const Error_1 = require("../error/Error");
 exports.post_post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {

@@ -13,7 +13,7 @@ exports.del_user = exports.del_edu = exports.put_edu = exports.del_holidays = ex
 const Profile_model_1 = require("./../models/Profile.model");
 const User_model_1 = require("./../models/User.model");
 const express_validator_1 = require("express-validator");
-const Error_1 = require("./../global/Error");
+const Error_1 = require("../error/Error");
 exports.users_get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const profiles = yield Profile_model_1.Profile.find().populate("user", ["name", "avatar"]);

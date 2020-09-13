@@ -17,7 +17,7 @@ const auth_1 = __importDefault(require("../../middleware/auth"));
 const User_model_1 = require("../../models/User.model");
 const express_validator_1 = require("express-validator");
 const authController_1 = require("../../controllers/authController");
-const Error_1 = require("./../../global/Error");
+const Error_1 = require("../../error/Error");
 const router = express_1.Router();
 // @route   Get api/auth
 // @desc    Test route
