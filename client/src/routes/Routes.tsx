@@ -4,12 +4,15 @@ import { makeStyles } from "@material-ui/styles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
-import store from "./../store";
+import { ApplicationState, configureAppStore } from "../store/store";
 
 import { Navbar } from "../components/layout/Navbar";
 import { Landing } from "../components/pages/Landing";
 import { Register } from "../components/pages/auth/Register";
 import { Login } from "../components/pages/auth/Login";
+
+const initialState: ApplicationState = {};
+const store = configureAppStore(initialState);
 
 const useStyles = makeStyles({
   header: {
@@ -20,6 +23,7 @@ const useStyles = makeStyles({
     padding: "2.5rem 3rem",
   },
 });
+
 export const Routes: FC = () => {
   const classes = useStyles();
 
