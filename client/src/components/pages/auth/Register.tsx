@@ -1,4 +1,4 @@
-import React, { FC, useState, FormEvent, ChangeEvent } from "react";
+import React, { FC, useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
@@ -9,6 +9,8 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { setAlert } from "../../../store/actions/actions";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,6 +39,10 @@ export const Register: FC = () => {
     password: "",
     password2: "",
   });
+  const [alertType, setAlerttype] = useState("");
+  const [msg, setMsg] = useState("");
+
+  const dispatch = useDispatch();
 
   const { name, email, password, password2 } = formData;
 
@@ -47,11 +53,16 @@ export const Register: FC = () => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("password dont match");
+      dispatch(setAlert(msg, alertType));
     } else {
       console.log(formData);
     }
   };
+
+  useEffect(() => {
+    setAlerttype("error");
+    setMsg("Passwords don't match!");
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
