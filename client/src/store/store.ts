@@ -4,8 +4,11 @@ import { createInjectorsEnhancer } from "redux-injectors";
 
 import { createRootReducer } from "./reducers/reducer";
 import { rootSaga } from "./sagas/saga";
+import { AlertState } from "./@types/types";
 
-export type ApplicationState = {};
+export type ApplicationState = {
+  alertState: AlertState;
+};
 
 function configureAppStore(initialState: ApplicationState) {
   const reduxSagaMonitorOptions = {};
@@ -26,7 +29,7 @@ function configureAppStore(initialState: ApplicationState) {
   const store = configureStore({
     reducer: createRootReducer(),
     middleware: [...getDefaultMiddleware(), ...middlewares],
-    preloadedState: initialState,
+    preloadedState: initialState as any,
     enhancers,
   });
 
