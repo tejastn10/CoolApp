@@ -11,8 +11,7 @@ import { Landing } from "../components/pages/Landing";
 import { Register } from "../components/pages/auth/Register";
 import { Login } from "../components/pages/auth/Login";
 import { alertInitialState } from "../store/reducers/alert";
-// import { AlertComponent as Alert } from "../components/layout/Alert";
-import Alert from "@material-ui/lab/Alert";
+import { AlertComponent as Alert } from "../components/layout/Alert";
 
 const initialState: ApplicationState = {
   alertState: alertInitialState,
@@ -39,7 +38,7 @@ export const Routes: FC = () => {
           <Grid item className={classes.header}>
             <Navbar />
           </Grid>
-          <Alert severity="error">This is an error alert — check it out!</Alert>
+          <Alert />
           <Grid item container className={classes.layout}>
             <Route exact path="/" component={Landing} />
             <Switch>
