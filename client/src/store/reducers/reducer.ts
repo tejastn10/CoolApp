@@ -2,7 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { alertReducer } from "../reducers/alert";
 
 const reducers = {
-  alert: alertReducer,
+  alertState: alertReducer,
 };
 
 const createRootReducer = () => {
