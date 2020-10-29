@@ -17,7 +17,7 @@ const reducer = createReducer(initalState, (builder) => {
     })
     .addCase(removeAlert, (state, action) => {
       state.alerts = state.alerts!.filter(
-        (alert) => alert.id !== action.payload
+        (alert) => alert.id !== action.payload.id
       );
     });
 });
