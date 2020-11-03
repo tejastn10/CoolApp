@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationState } from "../../store/store";
 import { Alert } from "@material-ui/lab";
@@ -37,7 +37,7 @@ export const AlertComponent: FC = () => {
             <Alert className={classes.topalert} severity={alert.alertType}>
               {alert.msg}
               {/* TODO: Change code */}
-              {close(alert)} 
+              {close(alert)}
             </Alert>
           </div>
         ))}
