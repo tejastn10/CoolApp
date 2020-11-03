@@ -9,8 +9,9 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { setAlert } from "../../../store/actions/actions";
+import { removeAlert, setAlert } from "../../../store/actions/actions";
 import { useDispatch } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -53,8 +54,12 @@ export const Register: FC = () => {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const id = nanoid();
     if (password !== password2) {
-      dispatch(setAlert(msg, alertType));
+      dispatch(setAlert(id, msg, alertType));
+      setTimeout(() => {
+        dispatch(removeAlert(id));
+      }, 5000);
     } else {
       console.log(formData);
     }

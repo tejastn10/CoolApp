@@ -1,10 +1,9 @@
 import React, { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ApplicationState } from "../../store/store";
 import { Alert } from "@material-ui/lab";
 import { AlertState } from "../../store/@types/types";
 import { makeStyles } from "@material-ui/core/styles";
-import { removeAlert } from "../../store/actions/actions";
 
 const useStyles = makeStyles((theme) => ({
   topalert: {
@@ -20,14 +19,6 @@ export const AlertComponent: FC = () => {
     (s) => s.alertState
   );
 
-  const dispatch = useDispatch();
-
-  const close = (alert: any) => {
-    setTimeout(() => {
-      dispatch(removeAlert(alert));
-    }, 5000);
-  };
-
   return (
     <div>
       {alertState.alerts !== null &&
@@ -36,8 +27,6 @@ export const AlertComponent: FC = () => {
           <div key={alert.id}>
             <Alert className={classes.topalert} severity={alert.alertType}>
               {alert.msg}
-              {/* TODO: Change code */}
-              {close(alert)}
             </Alert>
           </div>
         ))}
