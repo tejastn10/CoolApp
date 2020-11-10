@@ -9,7 +9,11 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { removeAlert, setAlert } from "../../../store/actions/actions";
+import {
+  registerRequest,
+  removeAlert,
+  setAlert,
+} from "../../../store/actions/actions";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -54,14 +58,14 @@ export const Register: FC = () => {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const id = nanoid();
     if (password !== password2) {
+      const id = nanoid();
       dispatch(setAlert(id, msg, alertType));
       setTimeout(() => {
         dispatch(removeAlert(id));
       }, 5000);
     } else {
-      console.log(formData);
+      dispatch(registerRequest(formData));
     }
   };
 
