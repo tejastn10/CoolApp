@@ -1,8 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { alertReducer } from "../reducers/alert";
+import { alertReducer } from "./alert";
+import { authReducer } from "./auth";
 
 const reducers = {
   alertState: alertReducer,
+  authState: authReducer,
 };
 
 const createRootReducer = () => {
