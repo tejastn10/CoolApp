@@ -1,6 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
 import { SET_AlERT, REMOVE_AlERT } from "./actionTypes";
-import { Alert } from "../@types/types";
 
 export const setAlert = createAction(
   SET_AlERT,
