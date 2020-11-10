@@ -4,10 +4,11 @@ import { createInjectorsEnhancer } from "redux-injectors";
 
 import { createRootReducer } from "./reducers/reducer";
 import { rootSaga } from "./sagas/saga";
-import { AlertState } from "./@types/types";
+import { AlertState, AuthState } from "./@types/types";
 
 export type ApplicationState = {
   alertState: AlertState;
+  authState: AuthState;
 };
 
 function configureAppStore(initialState: ApplicationState) {
