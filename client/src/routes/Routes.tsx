@@ -12,9 +12,11 @@ import { Register } from "../components/pages/auth/Register";
 import { Login } from "../components/pages/auth/Login";
 import { alertInitialState } from "../store/reducers/alert";
 import { AlertComponent as Alert } from "../components/layout/Alert";
+import { authInitialState } from "../store/reducers/auth";
 
 const initialState: ApplicationState = {
   alertState: alertInitialState,
+  authState: authInitialState,
 };
 const store = configureAppStore(initialState);
 
