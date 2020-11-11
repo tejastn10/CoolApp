@@ -6,6 +6,9 @@ import {
   AUTH_REQUEST,
   AUTH_SUCCESS,
   AUTH_ERROR,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
 } from "./actionTypes";
 
 export const authRequest = createAction(AUTH_REQUEST);
@@ -25,3 +28,13 @@ export const registerSuccess = createAction(REGISTER_SUCCESS, (data: any) => {
   };
 });
 export const registerFail = createAction(REGISTER_FAIL);
+
+export const loginRequest = createAction(LOGIN_REQUEST, (data: any) => {
+  return { payload: data };
+});
+export const loginSuccess = createAction(LOGIN_SUCCESS, (data: any) => {
+  return {
+    payload: data,
+  };
+});
+export const loginFail = createAction(LOGIN_FAIL);

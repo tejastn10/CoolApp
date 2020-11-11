@@ -6,6 +6,9 @@ import {
   authRequest,
   authSuccess,
   authError,
+  loginRequest,
+  loginSuccess,
+  loginFail,
 } from "./auth";
 
 export {
@@ -17,4 +20,7 @@ export {
   authRequest,
   authSuccess,
   authError,
+  loginRequest,
+  loginSuccess,
+  loginFail,
 };
