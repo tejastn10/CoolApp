@@ -1,7 +1,7 @@
 import axios from "axios";
 
 interface Params {
-  name: string;
+  name?: string;
   email: string;
   password: string;
 }
@@ -16,6 +16,20 @@ export const registerUser: any = async (params: Params) => {
 
   const body = JSON.stringify({ name, email, password });
   const url = "/api/users";
+
+  return axios.post(url, body, config);
+};
+
+export const loginUser: any = async (params: Params) => {
+  const { email, password } = params;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ email, password });
+  const url = "/api/auth";
 
   return axios.post(url, body, config);
 };
