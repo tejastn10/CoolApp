@@ -6,7 +6,7 @@ interface Params {
   password: string;
 }
 
-export const api = async (params: Params) => {
+export const registerUser: any = async (params: Params) => {
   const { name, email, password } = params;
   const config = {
     headers: {
@@ -18,4 +18,9 @@ export const api = async (params: Params) => {
   const url = "/api/users";
 
   return axios.post(url, body, config);
+};
+
+export const userAuth: any = async () => {
+  const url = "/api/auth";
+  return axios.get(url);
 };
