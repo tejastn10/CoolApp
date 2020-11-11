@@ -4,6 +4,9 @@ import {
   registerRequest,
   registerSuccess,
   registerFail,
+  loginRequest,
+  loginSuccess,
+  loginFail,
   authRequest,
   authSuccess,
   authError,
@@ -26,16 +29,37 @@ const reducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.user = action.payload;
     })
+    .addCase(authError, (state) => {
+      state.token = null;
+      state.isAuthenticated = false;
+      state.loading = false;
+    })
     .addCase(registerRequest, (state) => {
       state.loading = true;
     })
     .addCase(registerSuccess, (state, action) => {
       localStorage.setItem("token", action.payload.token);
+      state.token = action.payload.token;
       state.loading = false;
       state.isAuthenticated = true;
       state.user = null;
     })
-    .addCase(registerFail || authError, (state) => {
+    .addCase(registerFail, (state) => {
+      state.token = null;
+      state.isAuthenticated = false;
+      state.loading = false;
+    })
+    .addCase(loginRequest, (state) => {
+      state.loading = true;
+    })
+    .addCase(loginSuccess, (state, action) => {
+      localStorage.setItem("token", action.payload.token);
+      state.token = action.payload.token;
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.user = null;
+    })
+    .addCase(loginFail, (state) => {
       state.token = null;
       state.isAuthenticated = false;
       state.loading = false;
