@@ -1,11 +1,14 @@
 import { Action, nanoid } from "@reduxjs/toolkit";
 import { all, call, delay, fork, put, takeLatest } from "redux-saga/effects";
-import { registerUser, userAuth } from "../../services/API";
+import { loginUser, registerUser, userAuth } from "../../services/API";
 import { removeAlert, setAlert } from "../actions/alert";
 import {
   registerRequest,
   registerSuccess,
   registerFail,
+  loginRequest,
+  loginSuccess,
+  loginFail,
   authRequest,
   authError,
   authSuccess,
@@ -14,7 +17,7 @@ import {
 function* auth(action: Action) {
   try {
     if (authRequest.match(action)) {
-      const res = yield call(userAuth, action.payload);
+      const res = yield call(userAuth);
       const data = res.data;
       const id = nanoid();
       if (res.status !== 200) {
@@ -28,12 +31,8 @@ function* auth(action: Action) {
       }
     }
   } catch (err) {
-    const id = nanoid();
     localStorage.removeItem("token");
     yield put(authError());
-    yield put(setAlert(id, "Authorization Failed!!!", "error"));
-    yield delay(5000);
-    yield put(removeAlert(id));
   }
 }
 
@@ -72,6 +71,37 @@ function* register(action: Action) {
   }
 }
 
+function* login(action: Action) {
+  try {
+    if (loginRequest.match(action)) {
+      const res = yield call(loginUser, action.payload);
+      const data = res.data;
+      const id = nanoid();
+      if (res.status !== 200) {
+        localStorage.removeItem("token");
+        yield put(loginFail());
+        yield put(setAlert(id, "Login Failed! Server Error", "error"));
+        yield delay(5000);
+        yield put(removeAlert(id));
+      } else {
+        yield put(loginSuccess(data));
+        yield put(setAlert(id, "Logged In...", "success"));
+        yield delay(5000);
+        yield put(removeAlert(id));
+      }
+    }
+  } catch (err) {
+    const id = nanoid();
+    localStorage.removeItem("token");
+    yield put(loginFail());
+    yield put(
+      setAlert(id, "Login Failed! Please check your credentials...", "error")
+    );
+    yield delay(5000);
+    yield put(removeAlert(id));
+  }
+}
+
 function* watchRegisterRequest() {
   yield takeLatest(registerRequest.type, register);
 }
@@ -80,6 +110,14 @@ function* watchAuthRequest() {
   yield takeLatest(authRequest.type, auth);
 }
 
+function* watchLoginRequest() {
+  yield takeLatest(loginRequest.type, login);
+}
+
 export default function* registerSaga() {
-  yield all([fork(watchRegisterRequest), fork(watchAuthRequest)]);
+  yield all([
+    fork(watchRegisterRequest),
+    fork(watchAuthRequest),
+    fork(watchLoginRequest),
+  ]);
 }
