@@ -8,7 +8,11 @@ import {
   Button,
   Container,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { loginRequest } from "../../../store/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { ApplicationState } from "../../../store/store";
+import { AuthState } from "../../../store/@types/types";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,6 +41,17 @@ export const Login: FC = () => {
     password: "",
   });
 
+  const dispatch = useDispatch();
+  const authState = useSelector<ApplicationState, AuthState>(
+    (s) => s.authState
+  );
+
+  const { isAuthenticated, token } = authState;
+
+  if (isAuthenticated === true && token !== null) {
+    return <Redirect to="/dashboard" />;
+  }
+
   const { email, password } = formData;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +60,7 @@ export const Login: FC = () => {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(loginRequest({ email, password }));
     console.log("Success");
   };
 

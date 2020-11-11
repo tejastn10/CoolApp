@@ -1,21 +1,23 @@
-import React, { FC, useState, FormEvent, ChangeEvent, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { FC, useState, FormEvent, ChangeEvent } from "react";
 import {
-  Container,
+  makeStyles,
+  Grid,
   CssBaseline,
   Typography,
-  Grid,
   TextField,
   Button,
+  Container,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   registerRequest,
   removeAlert,
   setAlert,
 } from "../../../store/actions/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
+import { ApplicationState } from "../../../store/store";
+import { AuthState } from "../../../store/@types/types";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,10 +47,17 @@ export const Register: FC = () => {
     password: "",
     password2: "",
   });
-  const [alertType, setAlerttype] = useState("");
-  const [msg, setMsg] = useState("");
 
   const dispatch = useDispatch();
+  const authState = useSelector<ApplicationState, AuthState>(
+    (s) => s.authState
+  );
+
+  const { isAuthenticated, token } = authState;
+
+  if (isAuthenticated === true && token !== null) {
+    return <Redirect to="/dashboard" />;
+  }
 
   const { name, email, password, password2 } = formData;
 
@@ -60,7 +69,7 @@ export const Register: FC = () => {
     e.preventDefault();
     if (password !== password2) {
       const id = nanoid();
-      dispatch(setAlert(id, msg, alertType));
+      dispatch(setAlert(id, "Passwords don't match!", "error"));
       setTimeout(() => {
         dispatch(removeAlert(id));
       }, 5000);
@@ -68,11 +77,6 @@ export const Register: FC = () => {
       dispatch(registerRequest(formData));
     }
   };
-
-  useEffect(() => {
-    setAlerttype("error");
-    setMsg("Passwords don't match!");
-  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
