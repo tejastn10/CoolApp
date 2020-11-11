@@ -27,7 +27,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.user = action.payload;
     })
     .addCase(registerRequest, (state) => {
-      state = state;
+      state.loading = true;
     })
     .addCase(registerSuccess, (state, action) => {
       localStorage.setItem("token", action.payload.token);
