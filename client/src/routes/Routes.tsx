@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -13,6 +13,8 @@ import { Login } from "../components/pages/auth/Login";
 import { alertInitialState } from "../store/reducers/alert";
 import { AlertComponent as Alert } from "../components/layout/Alert";
 import { authInitialState } from "../store/reducers/auth";
+import { setAuthToken } from "../utils/setAuthToken";
+import { authRequest } from "../store/actions/auth";
 
 const initialState: ApplicationState = {
   alertState: alertInitialState,
@@ -30,8 +32,16 @@ const useStyles = makeStyles({
   },
 });
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
 export const Routes: FC = () => {
   const classes = useStyles();
+
+  useEffect(() => {
+    store.dispatch(authRequest());
+  }, []);
 
   return (
     <Provider store={store}>
