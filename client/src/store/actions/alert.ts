@@ -5,7 +5,6 @@ export const setAlert = createAction(
   SET_AlERT,
   (id: string, msg: string, alertType: string) => {
     return {
-      type: SET_AlERT,
       payload: { id, msg, alertType },
     };
   }
@@ -13,7 +12,6 @@ export const setAlert = createAction(
 
 export const removeAlert = createAction(REMOVE_AlERT, (id: string) => {
   return {
-    type: REMOVE_AlERT,
     payload: { id },
   };
 });
