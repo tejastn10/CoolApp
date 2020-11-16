@@ -7,6 +7,7 @@ import {
   loginRequest,
   loginSuccess,
   loginFail,
+  logout,
   authRequest,
   authSuccess,
   authError,
@@ -30,6 +31,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.user = action.payload;
     })
     .addCase(authError, (state) => {
+      localStorage.removeItem("token");
       state.token = null;
       state.isAuthenticated = false;
       state.loading = false;
@@ -45,6 +47,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.user = null;
     })
     .addCase(registerFail, (state) => {
+      localStorage.removeItem("token");
       state.token = null;
       state.isAuthenticated = false;
       state.loading = false;
@@ -60,9 +63,17 @@ const reducer = createReducer(initialState, (builder) => {
       state.user = null;
     })
     .addCase(loginFail, (state) => {
+      localStorage.removeItem("token");
       state.token = null;
       state.isAuthenticated = false;
       state.loading = false;
+    })
+    .addCase(logout, (state) => {
+      localStorage.removeItem("token");
+      state.token = null;
+      state.isAuthenticated = false;
+      state.loading = false;
+      state.user = null;
     });
 });
 
