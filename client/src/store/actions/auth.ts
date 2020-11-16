@@ -9,6 +9,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT,
 } from "./actionTypes";
 
 export const authRequest = createAction(AUTH_REQUEST);
@@ -38,3 +39,5 @@ export const loginSuccess = createAction(LOGIN_SUCCESS, (data: any) => {
   };
 });
 export const loginFail = createAction(LOGIN_FAIL);
+
+export const logout = createAction(LOGOUT);
