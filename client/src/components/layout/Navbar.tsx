@@ -34,7 +34,10 @@ export const Navbar: FC = () => {
   return (
     <AppBar position="fixed">
       <Toolbar>
-        <Link to="/" className={classes.link}>
+        <Link
+          to={isAuthenticated ? "/dashboard" : "/"}
+          className={classes.link}
+        >
           <Typography variant="h6">∘ ○ 〇 Meet and Greet 〇 ○ ∘</Typography>
         </Link>
         {!loading && (

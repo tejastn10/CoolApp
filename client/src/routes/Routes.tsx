@@ -15,6 +15,7 @@ import { AlertComponent as Alert } from "../components/layout/Alert";
 import { authInitialState } from "../store/reducers/auth";
 import { setAuthToken } from "../utils/setAuthToken";
 import { authRequest } from "../store/actions/auth";
+import { Dashboard } from "../components/pages/dashboard/Dashboard";
 
 const initialState: ApplicationState = {
   alertState: alertInitialState,
@@ -51,13 +52,18 @@ export const Routes: FC = () => {
             <Navbar />
           </Grid>
           <Alert />
-          <Grid item container className={classes.layout}>
-            <Route exact path="/" component={Landing} />
-            <Switch>
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-            </Switch>
-          </Grid>
+          {store.getState().authState.isAuthenticated ? (
+            <Route exact path="/dashboard" component={Dashboard} />
+          ) : (
+            <Grid item container className={classes.layout}>
+              <Route exact path="/" component={Landing} />
+              <Switch>
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/dashboard" component={Dashboard} />
+              </Switch>
+            </Grid>
+          )}
         </Grid>
       </Router>
     </Provider>
