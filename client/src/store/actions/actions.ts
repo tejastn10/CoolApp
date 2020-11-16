@@ -9,6 +9,7 @@ import {
   loginRequest,
   loginSuccess,
   loginFail,
+  logout,
 } from "./auth";
 
 export {
@@ -23,4 +24,5 @@ export {
   loginRequest,
   loginSuccess,
   loginFail,
+  logout,
 };
