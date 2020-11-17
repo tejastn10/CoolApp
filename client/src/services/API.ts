@@ -38,3 +38,8 @@ export const userAuth: any = async () => {
   const url = "/api/auth";
   return axios.get(url);
 };
+
+export const getCurrentProfile: any = async () => {
+  const url = "/api/profile/me";
+  return axios.get(url);
+};
