@@ -16,10 +16,13 @@ import { authInitialState } from "../store/reducers/auth";
 import { setAuthToken } from "../utils/setAuthToken";
 import { authRequest } from "../store/actions/auth";
 import { Dashboard } from "../components/pages/dashboard/Dashboard";
+import { profileInitialState } from "../store/reducers/profile";
+import { profileRequest } from "../store/actions/actions";
 
 const initialState: ApplicationState = {
   alertState: alertInitialState,
   authState: authInitialState,
+  profileState: profileInitialState,
 };
 const store = configureAppStore(initialState);
 
@@ -53,7 +56,9 @@ export const Routes: FC = () => {
           </Grid>
           <Alert />
           {store.getState().authState.isAuthenticated ? (
-            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/dashboard" component={Dashboard} /> &&
+            store.dispatch(authRequest()) &&
+            store.dispatch(profileRequest())
           ) : (
             <Grid item container className={classes.layout}>
               <Route exact path="/" component={Landing} />
