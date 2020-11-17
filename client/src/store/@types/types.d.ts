@@ -14,3 +14,10 @@ export interface AuthState {
 export interface AlertState {
   alerts: Alert[] | null;
 }
+
+export interface ProfileState {
+  profile: null;
+  profiles: [];
+  loading: boolean;
+  error: any;
+}
