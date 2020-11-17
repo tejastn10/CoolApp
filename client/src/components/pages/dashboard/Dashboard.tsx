@@ -1,10 +1,12 @@
 import React, { FC, useEffect } from "react";
-import { authRequest } from "../../../store/actions/actions";
+import { useDispatch } from "react-redux";
+import { profileRequest } from "../../../store/actions/actions";
 
 export const Dashboard: FC = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
-    authRequest();
-  }, []);
+    dispatch(profileRequest());
+  }, [dispatch]);
 
   return <div>Dashboard</div>;
 };
