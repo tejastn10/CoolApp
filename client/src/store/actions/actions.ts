@@ -11,6 +11,7 @@ import {
   loginFail,
   logout,
 } from "./auth";
+import { profileRequest, profileSuccess, profileError } from "./profile";
 
 export {
   setAlert,
@@ -25,4 +26,7 @@ export {
   loginSuccess,
   loginFail,
   logout,
+  profileRequest,
+  profileSuccess,
+  profileError,
 };
