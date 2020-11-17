@@ -9,7 +9,11 @@ import {
   Container,
 } from "@material-ui/core";
 import { Link, Redirect } from "react-router-dom";
-import { loginRequest } from "../../../store/actions/actions";
+import {
+  authRequest,
+  loginRequest,
+  profileRequest,
+} from "../../../store/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationState } from "../../../store/store";
 import { AuthState } from "../../../store/@types/types";
@@ -61,6 +65,8 @@ export const Login: FC = () => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginRequest({ email, password }));
+    dispatch(authRequest());
+    dispatch(profileRequest());
     console.log("Success");
   };
 

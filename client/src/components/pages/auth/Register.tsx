@@ -10,6 +10,8 @@ import {
 } from "@material-ui/core";
 import { Link, Redirect } from "react-router-dom";
 import {
+  authRequest,
+  profileRequest,
   registerRequest,
   removeAlert,
   setAlert,
@@ -75,6 +77,8 @@ export const Register: FC = () => {
       }, 5000);
     } else {
       dispatch(registerRequest(formData));
+      dispatch(authRequest());
+      dispatch(profileRequest());
     }
   };
 
