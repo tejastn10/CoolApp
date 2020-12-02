@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationState } from "../../store/store";
 import { AuthState } from "../../store/@types/types";
-import { logout } from "../../store/actions/actions";
+import { clearProfile, logout } from "../../store/actions/actions";
 
 const useStyles = makeStyles({
   link: {
@@ -22,6 +22,7 @@ export const Navbar: FC = () => {
   const dispatch = useDispatch();
 
   const logoutUser = () => {
+    dispatch(clearProfile());
     dispatch(logout());
   };
 
