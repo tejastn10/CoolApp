@@ -11,7 +11,12 @@ import {
   loginFail,
   logout,
 } from "./auth";
-import { profileRequest, profileSuccess, profileError } from "./profile";
+import {
+  profileRequest,
+  profileSuccess,
+  profileError,
+  clearProfile,
+} from "./profile";
 
 export {
   setAlert,
@@ -29,4 +34,5 @@ export {
   profileRequest,
   profileSuccess,
   profileError,
+  clearProfile,
 };
