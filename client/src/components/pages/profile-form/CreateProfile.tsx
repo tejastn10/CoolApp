@@ -10,7 +10,9 @@ import {
 } from "@material-ui/core";
 import { Facebook, Instagram, Twitter } from "@material-ui/icons";
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { profile } from "../../../store/actions/actions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const CreateProfile: FC = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     user: "Name",
     location: "",
@@ -76,6 +79,7 @@ export const CreateProfile: FC = () => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
+    dispatch(profile(formData));
   };
 
   return (
