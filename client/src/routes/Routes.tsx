@@ -19,6 +19,7 @@ import { Dashboard } from "../components/pages/dashboard/Dashboard";
 import { profileInitialState } from "../store/reducers/profile";
 import { profileRequest } from "../store/actions/actions";
 import { PrivateRoute } from "./private/PrivateRoute";
+import { CreateProfile } from "../components/pages/profile-form/CreateProfile";
 
 const initialState: ApplicationState = {
   alertState: alertInitialState,
@@ -67,6 +68,11 @@ export const Routes: FC = () => {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute
+                  exact
+                  path="/create-profile"
+                  component={CreateProfile}
+                />
               </Switch>
             </Grid>
           )}
