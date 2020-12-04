@@ -5,6 +5,7 @@ import {
   profileSuccess,
   profileError,
   clearProfile,
+  profile,
 } from "../actions/actions";
 
 const initialState: ProfileState = {
@@ -31,6 +32,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(clearProfile, (state) => {
       state.profile = null;
       state.profiles = [];
+    })
+    .addCase(profile, (state, action) => {
+      state.profile = action.payload;
     });
 });
 
