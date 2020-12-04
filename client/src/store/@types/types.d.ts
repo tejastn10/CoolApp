@@ -8,7 +8,7 @@ export interface AuthState {
   token: string | null;
   isAuthenticated: boolean | null;
   loading: boolean | null;
-  user: null;
+  user: null | User;
 }
 
 export interface AlertState {
@@ -20,4 +20,12 @@ export interface ProfileState {
   profiles: [];
   loading: boolean;
   error: any;
+}
+
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  avatar: string;
+  date: Date;
 }
