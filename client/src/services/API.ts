@@ -1,12 +1,22 @@
 import axios from "axios";
 
-interface Params {
+interface Auth {
   name?: string;
   email: string;
   password: string;
 }
 
-export const registerUser: any = async (params: Params) => {
+interface Profile {
+  location: string;
+  bio: string;
+  jobstatus: string;
+  hobbies: [string];
+  facebook: string;
+  twitter: string;
+  instagram: string;
+}
+
+export const registerUser: any = async (params: Auth) => {
   const { name, email, password } = params;
   const config = {
     headers: {
@@ -20,7 +30,7 @@ export const registerUser: any = async (params: Params) => {
   return axios.post(url, body, config);
 };
 
-export const loginUser: any = async (params: Params) => {
+export const loginUser: any = async (params: Auth) => {
   const { email, password } = params;
   const config = {
     headers: {
@@ -42,4 +52,16 @@ export const userAuth: any = async () => {
 export const getCurrentProfile: any = async () => {
   const url = "/api/profile/me";
   return axios.get(url);
+};
+
+export const userProfile: any = async (params: Profile) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const url = "/api/profile";
+
+  return axios.post(url, params, config);
 };
