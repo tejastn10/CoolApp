@@ -6,28 +6,10 @@ export interface IProfile extends Document {
   bio: String;
   jobstatus: String;
   hobbies: [String];
-  holidays: [{
-    title: String;
-    location: String;
-    from: Date;
-    to: Date;
-    current: Boolean;
-    description: String;
-  }];
-  education: [{
-    school: String;
-    degree: String;
-    fieldofstudy: String;
-    from: Date;
-    to: Date;
-    current: Boolean;
-    description: String;
-  }];
-  social: {
-    facebook: String;
-    twitter: String;
-    instagram: String;
-  };
+  facebook: String;
+  twitter: String;
+  instagram: String;
+
   date: Date;
 }
 
@@ -50,71 +32,14 @@ const ProfileSchema: Schema = new Schema({
     type: [String],
     required: true,
   },
-  holidays: [
-    {
-      title: {
-        type: String,
-        required: true,
-      },
-      location: {
-        type: String,
-      },
-      from: {
-        type: Date,
-        required: true,
-      },
-      to: {
-        type: Date,
-      },
-      current: {
-        type: Boolean,
-        default: false,
-      },
-      description: {
-        type: String,
-      },
-    },
-  ],
-  education: [
-    {
-      school: {
-        type: String,
-        required: true,
-      },
-      degree: {
-        type: String,
-        required: true,
-      },
-      fieldofstudy: {
-        type: String,
-        required: true,
-      },
-      from: {
-        type: Date,
-        required: true,
-      },
-      to: {
-        type: Date,
-      },
-      current: {
-        type: Boolean,
-        default: false,
-      },
-      description: {
-        type: String,
-      },
-    },
-  ],
-  social: {
-    facebook: {
-      type: String,
-    },
-    twitter: {
-      type: String,
-    },
-    instagram: {
-      type: String,
-    },
+  facebook: {
+    type: String,
+  },
+  twitter: {
+    type: String,
+  },
+  instagram: {
+    type: String,
   },
   date: {
     type: Date,
