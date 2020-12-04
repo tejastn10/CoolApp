@@ -16,6 +16,7 @@ import {
   profileSuccess,
   profileError,
   clearProfile,
+  profile,
 } from "./profile";
 
 export {
@@ -35,4 +36,5 @@ export {
   profileSuccess,
   profileError,
   clearProfile,
+  profile,
 };
