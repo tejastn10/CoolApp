@@ -62,7 +62,9 @@ export const prof_post = async (req: Request, res: Response) => {
     bio,
     jobstatus,
     hobbies,
-    social: { facebook, twitter, instagram },
+    facebook,
+    twitter,
+    instagram,
   } = req.body;
 
   // * Build Profile Object
@@ -71,9 +73,9 @@ export const prof_post = async (req: Request, res: Response) => {
   if (location) profileFields.location = location;
   if (bio) profileFields.bio = bio;
   if (jobstatus) profileFields.jobstatus = jobstatus;
-  if (facebook) profileFields.social.facebook = facebook;
-  if (twitter) profileFields.social.twitter = twitter;
-  if (instagram) profileFields.social.instagram = instagram;
+  if (facebook) profileFields.facebook = facebook;
+  if (twitter) profileFields.twitter = twitter;
+  if (instagram) profileFields.instagram = instagram;
   if (hobbies) {
     profileFields.hobbies = hobbies
       .split(",")
@@ -86,15 +88,21 @@ export const prof_post = async (req: Request, res: Response) => {
     // ? See if profile exists
     if (profile) {
       // * Update the profile
-      const { hobbies, social, holidays, education, jobstatus } = profileFields;
+      const {
+        hobbies,
+        facebook,
+        instagram,
+        twitter,
+        jobstatus,
+      } = profileFields;
       profile = await Profile.findOneAndUpdate(
         { user: req.user.id },
         {
           $set: {
             hobbies,
-            social,
-            holidays,
-            education,
+            facebook,
+            instagram,
+            twitter,
             jobstatus,
           },
         },
@@ -108,106 +116,6 @@ export const prof_post = async (req: Request, res: Response) => {
     profile = new Profile(profileFields);
 
     await profile.save();
-    res.json(profile);
-  } catch (err) {
-    LogErr(err, res);
-  }
-};
-
-export const put_holidays = async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const { title, location, from, to, current, description } = req.body;
-
-  const newHoliday = { title, location, from, to, current, description };
-
-  try {
-    const profile = await Profile.findOne({ user: req.user.id });
-
-    profile?.holidays.unshift(newHoliday);
-    await profile?.save();
-
-    res.json(profile);
-  } catch (err) {
-    LogErr(err, res);
-  }
-};
-
-export const del_holidays = async (req: Request, res: Response) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id });
-
-    // Get Remove Index
-    const removeIndex = profile?.holidays
-      .map((item: any) => item.id) // TODO: Change type
-      .indexOf(req.params.holi_id);
-
-    profile?.holidays.splice(removeIndex!, 1);
-
-    await profile?.save();
-
-    res.json(profile);
-  } catch (err) {
-    LogErr(err, res);
-  }
-};
-
-export const put_edu = async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const {
-    school,
-    degree,
-    fieldofstudy,
-    from,
-    to,
-    current,
-    description,
-  } = req.body;
-
-  const newEdu = {
-    school,
-    degree,
-    fieldofstudy,
-    from,
-    to,
-    current,
-    description,
-  };
-
-  try {
-    const profile = await Profile.findOne({ user: req.user.id });
-
-    profile?.education.unshift(newEdu);
-    await profile?.save();
-
-    res.json(profile);
-  } catch (err) {
-    LogErr(err, res);
-  }
-};
-
-export const del_edu = async (req: Request, res: Response) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id });
-
-    // Get Remove Index
-    const removeIndex = profile?.education
-      .map((item: any) => item.id) // TODO: Change type
-      .indexOf(req.params.edu_id);
-
-    profile?.education.splice(removeIndex!, 1);
-
-    await profile?.save();
-
     res.json(profile);
   } catch (err) {
     LogErr(err, res);
