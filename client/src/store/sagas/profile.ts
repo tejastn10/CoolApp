@@ -11,7 +11,6 @@ import { removeAlert, setAlert } from "../actions/alert";
 function* profile(action: Action) {
   try {
     if (profileRequest.match(action)) {
-      console.log("weehee");
       const res = yield call(getCurrentProfile);
       const data = res.data;
       console.log(data);
